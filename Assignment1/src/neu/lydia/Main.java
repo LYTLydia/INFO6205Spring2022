@@ -1,5 +1,9 @@
 package neu.lydia;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -28,6 +32,26 @@ public class Main {
             }
 
         }
+    }
+
+
+
+
+
+    public static List<Integer> majorityElement(int[] nums) {
+        int amount = nums.length / 3;
+        Arrays.sort(nums);
+        List<Integer> list = new ArrayList<>();
+        int m = 0, n = 0;
+        while (n < nums.length) {
+            if (nums[m] != nums[n]) {
+                if (n - m > amount) list.add(nums[m]);
+                m = n;
+            }
+            n++;
+        }
+        if (n - m > amount) list.add(nums[m]);
+        return list;
     }
 }
 
