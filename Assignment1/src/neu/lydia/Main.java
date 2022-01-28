@@ -53,6 +53,44 @@ public class Main {
         if (n - m > amount) list.add(nums[m]);
         return list;
     }
+
+
+
+    public int hIndex(int[] citations) {
+        int length = citations.length;
+        int left = 0;
+        int right = length;
+        while(left<right){
+            int mid=(left+right+1)/2;
+            int count = 0;
+            for(int citation: citations){
+                if(citation>=mid){
+                    count++;
+                }
+            }
+
+            if(count>=mid){
+                left=mid;
+            }
+            else right = mid-1;
+        }
+
+        return left;
+
+    }
+
+
+
+
+
+
+
+
+
+
 }
+
+
+
 
 
