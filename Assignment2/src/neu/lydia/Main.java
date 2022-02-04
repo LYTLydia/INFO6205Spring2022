@@ -1,5 +1,11 @@
 package neu.lydia;
 
+import java.security.KeyStore;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -53,7 +59,6 @@ public class Main {
     }
 
     //Q3
-
     public int findMin(int[] nums) {
         int l = 0, r = nums.length - 1, mid;
         while (l < r) {
@@ -69,6 +74,34 @@ public class Main {
             }
         }
         return nums[l];
+    }
+
+    //Q4
+    public int minMeetingRooms(int[][] intervals) {
+        if(intervals == null || intervals.length == 0)
+            return 0;
+        int rooms = 1;
+        Arrays.sort(intervals, (m1, m2) -> m1[0] - m2[0]);
+        for(int i = 0; i < intervals.length - 1; i++) {
+            if(intervals[i+1][0] < intervals[i][1])
+                rooms++;
+        }
+        return rooms;
+    }
+
+    //Q5
+    public int[] topKFrequent(int[] nums, int k) {
+        int[] rst = new int[k];
+        HashMap<Integer, Integer> frequency = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            frequency.merge(nums[i], 1, Integer::sum);
+        }
+        ArrayList<Map.Entry<Integer, Integer>> entryList = new ArrayList<>(frequency.entrySet());
+        entryList.sort((o1, o2) -> o2.getValue() - o1.getValue());
+        for (int i = 0; i < k; i++) {
+            rst[i] = entryList.get(i).getKey();
+        }
+        return rst;
     }
 
 }
