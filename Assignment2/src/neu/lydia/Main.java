@@ -1,10 +1,7 @@
 package neu.lydia;
 
 import java.security.KeyStore;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Main {
 
@@ -102,6 +99,147 @@ public class Main {
             rst[i] = entryList.get(i).getKey();
         }
         return rst;
+    }
+
+    //Q6
+    public int threeSumClosest(int[] nums, int target) {
+
+        Arrays.sort(nums);
+        //System.out.println(Arrays.toString(nums));
+
+        int threeSum = nums[0] + nums[1] + nums[2];
+
+        for (int i = 0; i < nums.length - 2; i++) {
+            int left = i+1;
+            int right = nums.length - 1;
+
+            while(left < right){
+                int temp = nums[i] + nums[left] + nums[right];
+                if (Math.abs(temp-target)<Math.abs(threeSum-target)){threeSum = temp;}
+
+                if (temp>target){
+                    right--;
+                }else if (temp < target){
+                    left++;
+                }else{
+                    return temp;
+                }
+            }
+        }
+
+        return threeSum;
+    }
+
+    //Q7
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        ArrayList<int[]> res=new ArrayList<>();
+        int i=0;
+        while(i<intervals.length&&newInterval[0]>intervals[i][1]){
+            res.add(intervals[i]);
+            i++;
+        }
+        int left=newInterval[0];
+        if(i<intervals.length){
+            left=Math.min(intervals[i][0],newInterval[0]);
+        }
+        int right=newInterval[1];
+        while(i<intervals.length&&newInterval[1]>=intervals[i][0]){
+            i++;
+        }
+        if(i>0) right=Math.max(right,intervals[i-1][1]);
+        res.add(new int[]{left,right});
+        while(i<intervals.length){
+            res.add(intervals[i]);
+            i++;
+        }
+
+        int ans[][]=new int[res.size()][2];
+        for(int j=0;j<res.size();j++){
+            ans[j]=res.get(j);
+        }
+        return ans;
+    }
+
+    //Q8
+    public int eraseOverlapIntervals(int[][] arr) {
+        if(arr.length <=1) return 0;
+        Arrays.sort(arr,(a,b)->a[1]-b[1]);
+        int count=1;
+        int end=arr[0][1];
+        for(int[] interval:arr){
+            if(interval[0]>=end){
+                count++;
+                end=interval[1];
+            }
+        }
+        return arr.length-count;
+    }
+
+    //Q9
+    public int[][] intervalIntersection(int[][] firstList, int[][] secondList) {
+        List<int[]> list = new ArrayList<>();
+        int m = firstList.length;
+        int n = secondList.length;
+        int i = 0;
+        int j = 0;
+        while(i < m && j < n){
+            int [] tmp = new int[2];
+            int a = firstList[i][0];
+            int b = firstList[i][1];
+            int x = secondList[j][0];
+            int y = secondList[j][1];
+            tmp[0] = Math.max(a,x);
+            tmp[1] = Math.min(b,y);
+            if(tmp[1] >= tmp[0])
+                list.add(tmp);
+            if(y >= b){
+                i++;
+            }
+            else{
+                j++;
+            }
+        }
+        return list.toArray(new int[list.size()][]);
+    }
+
+    //Q10
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums);
+
+        for (int i = 0; i < nums.length; i++) {
+
+            if (i > 0 && nums[i - 1] == nums[i]) {
+                continue;
+            }
+
+            for (int j = i + 1; j < nums.length; j++) {
+
+                if (j > i + 1 && nums[j - 1] == nums[j]) {
+                    continue;
+                }
+
+                int left = j + 1;
+                int right = nums.length - 1;
+                while (right > left) {
+                    int sum = nums[i] + nums[j] + nums[left] + nums[right];
+                    if (sum > target) {
+                        right--;
+                    } else if (sum < target) {
+                        left++;
+                    } else {
+                        result.add(Arrays.asList(nums[i], nums[j], nums[left], nums[right]));
+
+                        while (right > left && nums[right] == nums[right - 1]) right--;
+                        while (right > left && nums[left] == nums[left + 1]) left++;
+
+                        left++;
+                        right--;
+                    }
+                }
+            }
+        }
+        return result;
     }
 
 }
