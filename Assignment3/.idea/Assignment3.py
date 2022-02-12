@@ -1,5 +1,8 @@
 #Q1
 # Definition for singly-linked list.
+import heapq
+
+
 class ListNode:
      def __init__(self, val=0, next=None):
          self.val = val
@@ -72,3 +75,35 @@ class Solution:
             cur=cur.next
 
         return new_head
+
+#Q3
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+class Solution:
+    def mergeTowLists(self, l1, l2):
+        head=dummy=ListNode()
+        while l1!=None and l2!=None:
+            if l1.val<=l2.val:
+                dummy.next=l1
+                l1=l1.next
+            else:
+                dummy.next=l2
+                l2=l2.next
+            dummy=dummy.next
+        if l1==None:
+            dummy.next=l2
+        else:
+            dummy.next=l1
+        return head.next
+
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        lens=len(lists)
+        if lens==0:
+            return None
+        elif lens==1:
+            return lists[0]
+        else:
+            half=lens//2
+            return self.mergeTowLists(self.mergeKLists(lists[:half]),self.mergeKLists(lists[half:]))
