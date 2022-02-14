@@ -107,3 +107,160 @@ class Solution:
         else:
             half=lens//2
             return self.mergeTowLists(self.mergeKLists(lists[:half]),self.mergeKLists(lists[half:]))
+
+#Q4
+class Solution:
+    def reorderList(self, head: ListNode) -> None:
+        length, first = 0, head
+        while first:
+            length += 1
+            first = first.next
+        left = length // 2
+
+        l_list, node, cur = [], head, 0
+        while cur < length:
+            if cur > left:
+                l_list.append(node)
+            node = node.next
+            cur += 1
+        ans = node = head
+
+        for i in range(len(l_list) - 1, -1, -1):
+            new = l_list[i]
+            temp = node.next
+            node.next = new
+            new.next = temp
+            node = node.next.next
+
+        if length % 2 == 0:
+            node.next.next = None
+        else:
+            node.next = None
+
+#Q5
+class Solution:
+    def isPalindrome(self, head: ListNode) -> bool:
+        rev = None
+        slow = fast = head
+        while fast and fast.next:
+            fast = fast.next.next
+            rev,rev.next,slow = slow,rev,slow.next
+        if fast:
+            slow = slow.next
+        while rev and rev.val == slow.val:
+            slow = slow.next
+            rev = rev.next
+        return not rev
+
+#Q6
+class Solution:
+    def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
+        a = head
+        b = head
+
+        for i in range(n):
+            if a.next:
+                a = a.next
+            else:
+                return head.next
+
+        while a.next:
+            a = a.next
+            b = b.next
+        b.next = b.next.next
+        return head
+
+
+#Q7
+class Solution:
+    def oddEvenList(self, head: ListNode) -> ListNode:
+        if not head:
+            return head
+        odd, even = head, head.next
+        cp_even = even
+        while even and even.next:
+            odd.next = even.next
+            odd = odd.next
+            even.next = even.next.next
+            even = even.next
+        odd.next = cp_even
+
+        return head
+
+
+#Q8
+class Solution:
+    def insert(self,head:'Node',insertVal:int)->'Node':
+        if head == None:
+            node=Node(insertVal)
+            node.next=node
+            return node
+
+        cur=head
+        while cur.next.val>=cur.val and cur.next!=head:
+            cur=cur.next
+
+        first=cur.next
+        last=cur
+        node=Node(insertVal)
+        if first.val>=insertVal:
+            node.next=first
+            last.next=node
+            return head
+
+        cur=first
+        while cur.next.val<insertVal:
+            cur=cur.next
+
+        node.next=cur.next
+        cur.next=node
+        return head
+
+
+#Q9
+class Solution:
+    def nextLargerNodes(self, head: Optional[ListNode]) -> List[int]:
+        if not head:
+            return []
+        if not head.next:
+            return [0]
+
+        res=[]
+        while head:
+            res.append(head.val)
+            head=head.next
+
+        stack=[]
+        for index,value in enumerate(res):
+            if index==0:
+                stack.append((index,value))
+            while stack and value>stack[-1][1]:
+                res[stack[-1][0]]=value
+                stack.pop()
+            stack.append((index,value))
+
+        if stack:
+            for i in stack:
+                res[i[0]]=0
+
+        return res
+
+
+#Q10
+class Solution:
+    def deleteDuplicates(self, head: ListNode) -> ListNode:
+        if head == None:
+            return head
+
+        dummy=ListNode(0,head)
+
+        cur=dummy
+        while cur.next and cur.next.next:
+            if cur.next.val==cur.next.next.val:
+                temp=cur.next.val
+                while cur.next and cur.next.val==temp:
+                    cur.next=cur.next.next
+            else:
+                cur=cur.next
+
+        return dummy.next
