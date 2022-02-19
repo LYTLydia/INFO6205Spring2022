@@ -60,7 +60,7 @@ class Solution:
             while m<n:
                 arr[m],arr[n]=arr[n],arr[m]
                 m+=1
-                n-=1
+                n-=1 #reserve every element
 
         i,j,l=0,1,len(arr)
         while i<l:
@@ -76,6 +76,35 @@ class Solution:
             p=p.next
 
         return re_head.next
+
+#Q4
+class Solution:
+    def nodesBetweenCriticalPoints(self, head: Optional[ListNode]) -> List[int]:
+        arr=[]
+        abs=[]
+        dis=[]
+        if head == None:
+            return [-1,-1]
+
+        while head:
+            arr.append(head.val)
+            head=head.next
+
+        for i in range(1,len(arr)-1):
+            if(arr[i-1]<arr[i] and arr[i+1]<arr[i])or(arr[i]<arr[i-1] and arr[i]<arr[i+1]):
+                abs.append(i)
+
+        if len(abs)>2:
+            for m in range(0,len(abs)-1):
+                n=abs[m+1]-abs[m]
+                dis.append(n)
+                m+=1
+            return [min(dis),abs[-1]-abs[0]]
+        elif len(abs)==2:
+            return [abs[-1]-abs[0],abs[-1]-abs[0]]
+        else:
+            return [-1,-1]
+
 
 
 

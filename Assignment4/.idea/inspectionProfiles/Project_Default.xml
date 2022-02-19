@@ -1910,6 +1910,7 @@
       <option name="ignoredIdentifiers">
         <list>
           <option value="Assignment4.Optional" />
+          <option value="Assignment4.List" />
         </list>
       </option>
     </inspection_tool>
