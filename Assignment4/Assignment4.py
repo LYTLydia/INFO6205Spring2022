@@ -1,4 +1,7 @@
 #Q1
+from heapq import merge
+
+
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
@@ -105,6 +108,23 @@ class Solution:
         else:
             return [-1,-1]
 
+#Q5
+class Solution:
+    def sortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if head == None:
+            return head
+        arr=[]
+        while head:
+            arr.append(head.val)
+            head=head.next
+
+        arr.sort()
+
+        p=re_head=ListNode
+        for v in arr:
+            p.next=ListNode(v)
+            p=p.next
+        return re_head.next
 
 
 
