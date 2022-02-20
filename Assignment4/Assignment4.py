@@ -1,4 +1,5 @@
 #Q1
+import random
 from heapq import merge
 
 
@@ -59,7 +60,7 @@ class Solution:
             arr.append(head.val)
             head=head.next
 
-        def reserve(m,n):
+        def reverse(m,n):
             while m<n:
                 arr[m],arr[n]=arr[n],arr[m]
                 m+=1
@@ -69,7 +70,7 @@ class Solution:
         while i<l:
             last=min(i+j,l)
             if (last-i)%2==0:
-                reserve(i,last-1)
+                reverse(i,last-1)
             i=last
             j+=1
 
@@ -126,5 +127,32 @@ class Solution:
             p=p.next
         return re_head.next
 
+#Q6
+class Solution:
+
+    def __init__(self, head: Optional[ListNode]):
+        self. arr=[]
+        while head:
+            self.arr.append(head.val)
+            head=head.next
 
 
+    def getRandom(self) -> int:
+        return random.choice(self.arr)
+
+#Q7
+class Solution:
+    def reverseBetween(self, head: ListNode, left: int, right: int) -> ListNode:
+        arr=[]
+        while head:
+            arr.append(head.val)
+            head=head.next
+
+        arr[left-1:right]=list(reversed(arr[left-1:right]))
+
+        p=re_head=ListNode
+        for v in arr:
+            p.next=ListNode(v)
+            p=p.next
+
+        return re_head.next
