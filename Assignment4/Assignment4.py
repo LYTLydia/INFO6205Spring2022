@@ -1,6 +1,7 @@
 #Q1
 import random
 from heapq import merge
+import numpy
 
 
 class ListNode:
@@ -24,8 +25,7 @@ class Solution:
 
         cur1.next=head
 
-#find the tail of list2
-        while head != None:
+        while head.next != None:
             head = head.next
             count+=1
 
@@ -129,7 +129,6 @@ class Solution:
 
 #Q6
 class Solution:
-
     def __init__(self, head: Optional[ListNode]):
         self. arr=[]
         while head:
@@ -156,3 +155,82 @@ class Solution:
             p=p.next
 
         return re_head.next
+
+
+#Q8
+class Solution:
+    def splitListToParts(self, head: ListNode, k: int) -> List[ListNode]:
+        lens = 0
+        p = head
+        while p != None:
+            lens += 1
+            p = p.next
+
+        m = lens // k #size
+        n    = lens % k #quan for m+1
+
+        res = []
+        p = head
+        for i in range(n):
+            temp = ListNode()
+            q = temp
+            for i in range(m + 1):
+                q.next = p
+                p = p.next
+                q = q.next
+                q.next = None
+            res.append(temp.next)
+
+        for i in range(k - n):
+            temp = ListNode()
+            q = temp
+            for i in range(m):
+                if p != None:
+                    q.next = p
+                    p = p.next
+                    q = q.next
+                    q.next = None
+            res.append(temp.next)
+
+        return res
+
+
+#Q9
+class Solution:
+    def numComponents(self, head: Optional[ListNode], nums: List[int]) -> int:
+        dict_linked={}
+        i=0
+        while head!=None:
+            dict_linked[head.val]=i
+            head=head.next
+            i+=1
+
+        nums=sorted(nums,key=lambda x:dict_linked[x])
+
+        count=1
+        for i in range(0,len(nums)-1):
+            if dict_linked[nums[i+1]]-dict_linked[nums[i]]>1: #count not adjacent
+                count += 1
+        return count
+
+#10
+class Solution:
+    def pairSum(self, head: Optional[ListNode]) -> int:
+        arr=[]
+        while head:
+            arr.append(head.val)
+            head=head.next
+
+        n=len(arr)
+
+        for i in range(0,n//2):
+            arr[i]+=arr[n-1-i]
+
+        new_arr=arr[:n//2]
+        return max(new_arr)
+
+
+
+
+
+
