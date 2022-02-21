@@ -1,7 +1,6 @@
 #Q1
 import random
 from heapq import merge
-import numpy
 
 
 class ListNode:
