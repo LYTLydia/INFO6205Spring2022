@@ -111,3 +111,27 @@ class Solution:
 
         return res
 
+#Q4
+class Solution:
+    def largestValues(self, root: Optional[TreeNode]) -> List[int]:
+        res=[]
+        if root == None:
+            return res
+
+        q=deque()
+        q.append(root)
+
+        while len(q)>0:
+            size=len(q)
+            l=[]
+            while size>0:
+                cur=q.popleft()
+                l.append(cur.val)
+                if cur.left!=None:
+                    q.append(cur.left)
+                if cur.right!=None:
+                    q.append(cur.right)
+                size-=1
+            res.append(max(l[:]))
+
+        return res
