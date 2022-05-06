@@ -1,4 +1,4 @@
-#1
+#Q1
 class Solution:
     def compress(self, res):
         if len(res) == 0:
@@ -24,7 +24,7 @@ class Solution:
             return res
 
 
-#2
+#Q2
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
         m, n = len(grid), len(grid[0])
@@ -46,7 +46,7 @@ class Solution:
         return res
 
 
-#3
+#Q3
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
         res = []
@@ -59,7 +59,7 @@ class Solution:
                 dic[keys].append(s)
         return list(dic.values())
 
-#4
+#Q4
 class TreeNode:
     def __init__(self,x):
         self.val=x
